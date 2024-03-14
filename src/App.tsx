@@ -9,11 +9,16 @@ import reset from 'styled-reset'
 import { useEffect, useState } from 'react'
 import Loading from './components/loading'
 import { auth } from './firebase'
+import Protection from './components/protection'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <Protection>
+        <Layout />
+      </Protection>
+    ),
     children: [
       {
         path: '',
@@ -54,7 +59,6 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const Wrapper = styled.div`
-  height: 100vh;
   display: flex;
   justify-content: center;
 `
