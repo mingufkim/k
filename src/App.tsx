@@ -4,10 +4,11 @@ import Home from './routes/home'
 import Profile from './routes/profile'
 import Signin from './routes/signin'
 import Signup from './routes/signup'
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
 import { useEffect, useState } from 'react'
 import Loading from './components/loading'
+import { auth } from './firebase'
 
 const router = createBrowserRouter([
   {
@@ -52,11 +53,18 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`
+
 function App() {
   const [loading, setLoading] = useState(true)
 
   const init = async () => {
-    // wait for firebase to initialize
+    await auth.authStateReady()
+
     setLoading(false)
   }
 
@@ -65,10 +73,10 @@ function App() {
   }, [])
 
   return (
-    <>
+    <Wrapper>
       <GlobalStyles />
       {loading ? <Loading /> : <RouterProvider router={router} />}
-    </>
+    </Wrapper>
   )
 }
 
