@@ -67,6 +67,7 @@ export const Switch = styled.div`
     border-radius: 1rem;
     font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
       color: #fff;
     }
