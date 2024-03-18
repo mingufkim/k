@@ -63,11 +63,12 @@ export const Error = styled.p`
 export const Switch = styled.div`
   margin-top: 1rem;
   a {
-    color: #ccc;
+    padding: 0.5rem;
+    border-radius: 1rem;
     font-weight: bold;
     text-decoration: none;
     &:hover {
-      text-decoration: underline;
+      color: #fff;
     }
   }
 `

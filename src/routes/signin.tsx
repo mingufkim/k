@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FirebaseError } from 'firebase/app'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Error, Form, Input, Switch, Title, Wrapper } from '../components/auth'
+import Github from '../components/github'
 
 export default function Signup() {
   const [loading, setLoading] = useState(false)
@@ -73,6 +74,7 @@ export default function Signup() {
         <Switch>
           <Link to='/signup'>Create account</Link>
         </Switch>
+        <Github />
       </Wrapper>
     </>
   )
