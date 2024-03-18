@@ -1,68 +1,9 @@
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useState } from 'react'
-import styled from 'styled-components'
 import { auth } from '../firebase'
-import { useNavigate } from 'react-router-dom'
-
-const Title = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
-`
-
-const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 30rem;
-  padding: 3rem 0;
-`
-
-const Form = styled.form`
-  margin: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-`
-
-const Input = styled.input`
-  background-color: #333;
-  color: #ccc;
-  padding: 1rem 3rem;
-  border: none;
-  border-radius: 0.5rem;
-  width: 100%;
-  font-size: 1.5rem;
-  &::placeholder {
-    color: #bbb;
-  }
-  &:focus {
-    outline: none;
-    border: 1px solid #ccc;
-  }
-  &[type='submit'] {
-    border: none;
-    margin: 1.5rem 0;
-    padding: 1rem;
-    width: 50%;
-    margin-left: auto;
-    background-color: #ccc;
-    color: #333;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-      background-color: #ddd;
-    }
-  }
-`
-
-const Error = styled.p`
-  color: #ff453a;
-  font-size: 1.5rem;
-  margin-top: 1rem;
-`
+import { Link, useNavigate } from 'react-router-dom'
+import { FirebaseError } from 'firebase/app'
+import { Error, Form, Input, Switch, Title, Wrapper } from '../components/auth'
 
 export default function Signup() {
   const [loading, setLoading] = useState(false)
@@ -89,6 +30,8 @@ export default function Signup() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    setError('')
+
     if (loading || name === '' || email === '' || password === '') return
 
     try {
@@ -104,8 +47,9 @@ export default function Signup() {
 
       navigate('/')
     } catch (error) {
-      console.error(error)
-      // TODO: Set error
+      if (error instanceof FirebaseError) {
+        setError(error.message)
+      }
     } finally {
       setLoading(false)
     }
@@ -146,6 +90,9 @@ export default function Signup() {
           />
         </Form>
         {error !== '' ? <Error>{error}</Error> : null}
+        <Switch>
+          <Link to='/signin'>Already have an account?</Link>
+        </Switch>
       </Wrapper>
     </>
   )
